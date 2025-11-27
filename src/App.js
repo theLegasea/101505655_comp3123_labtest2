@@ -18,8 +18,7 @@ const  App = () => {
         setError("");
         setLoading(true);
 
-        fetch("https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric")
-        .then(response => {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)        .then(response => {
             if (!response.ok) {
                 throw new Error("Could not fetch weather data");
             }
@@ -33,16 +32,31 @@ const  App = () => {
         });
     }
 
+    function testWeather() {
+            console.log(weather)
+        }
+
   return (
     <div className="container mt-5">
         <div className="card col-md mx-auto">
             <div className="card-body">
                 <h2 className="text-center mb-3">Weather Tracking</h2>
+                <div className="d-flex justify-content-center">
+                    <input
+                        type="text"
+                        className="form-control mb-2 flex-grow-1"
+                        value={city}
+                        onChange={e => setCity(e.target.value)}
+                    />
+                    <button className="btn btn-primary mb-2" onClick={fetchWeather}>
+                        {loading ? <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div> : "Get Weather"}
+                    </button>
+                </div>
+                <button className="btn btn-primary mb-2" onClick={testWeather}>testweather</button>
 
-                <input/>
-                <button>Get Weather Updates</button>
-
-            {/*TODO: if weather fetched - content,
+                {/*TODO: if weather fetched - content,
                      while weather loads - spinner?,
                      if weather fails to fetch*/}
             </div>
