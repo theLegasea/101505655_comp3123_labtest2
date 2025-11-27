@@ -34,6 +34,35 @@ const App = () => {
         });
     }
 
+    const weatherToEmoji = (weather_main) => {
+        switch(weather_main.toLowerCase()) {
+            case 'clear':
+                return '☀️';
+            case 'clouds':
+                return '☁️';
+            case 'rain':
+                return '🌧️';
+            case 'drizzle':
+                return '🌦️';
+            case 'thunderstorm':
+                return '⛈️';
+            case 'snow':
+                return '❄️';
+            case 'mist':
+            case 'fog':
+            case 'haze':
+                return '🌫️';
+            default:
+                return '🌤️';
+        }
+    }
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            fetchWeather();
+        }
+    }
+
     return (
         <div className="min-vh-100 d-flex align-items-center" style={{background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'}}>
             <div className="container">
@@ -44,6 +73,7 @@ const App = () => {
                             <input
                                 type="text"
                                 className="form-control mb-2 flex-grow-1"
+                                onKeyPress={handleKeyPress}
                                 value={city}
                                 onChange={e => setCity(e.target.value)}
                             />
@@ -54,14 +84,13 @@ const App = () => {
                                 </div> : "Get Weather"}
                             </button>
                         </div>
-                        {/*TODO: if weather fetched - content,
-                     while weather loads - spinner?,
-                     if weather fails to fetch*/}
+
                         {error && (<p className="alert alert-danger text-center">{error}</p>)}
 
                         {weather && (
-                            <>
+                            <div className="mt-4">
                                 <div className="text-center mb-4">
+                                    <div style={{fontSize: '80px'}}>{weatherToEmoji(weather.weather[0].main)}</div>
                                     <h2>{weather.name}</h2>
                                     <h1 className="display-1">{Math.round(weather.main.temp)}°C</h1>
                                     <p className="lead text-capitalize">{weather.weather[0].description}</p>
@@ -96,7 +125,7 @@ const App = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </>
+                            </div>
                         )}
 
                         {!weather && !error && !loading && (
