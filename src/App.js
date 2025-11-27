@@ -25,16 +25,13 @@ const  App = () => {
             return response.json();
         }).then(data => {
             setWeather(data);
+            console.log(weather);
             setLoading(false);
         }).catch(err => {
             setError(err.message);
             setLoading(false);
         });
     }
-
-    function testWeather() {
-            console.log(weather)
-        }
 
   return (
     <div className="container mt-5">
@@ -54,11 +51,52 @@ const  App = () => {
                         </div> : "Get Weather"}
                     </button>
                 </div>
-                <button className="btn btn-primary mb-2" onClick={testWeather}>testweather</button>
-
                 {/*TODO: if weather fetched - content,
                      while weather loads - spinner?,
                      if weather fails to fetch*/}
+                {error && (<p className="alert alert-danger text-center">{error}</p>)}
+
+                {weather && (
+                    <>
+                        <div className="text-center mb-4">
+                            <h2>{weather.name}</h2>
+                            <h1 className="display-1">{Math.round(weather.main.temp)}°C</h1>
+                            <p className="lead text-capitalize">{weather.weather[0].description}</p>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-6 mb-3">
+                                <div className="card-body bg-light rounded">
+                                    <small className="text-muted">Feels Like</small>
+                                    <p className="fs-4 mb-0">{Math.round(weather.main.feels_like)}°C</p>
+                                </div>
+                            </div>
+
+                            <div className="col-6 mb-3">
+                                <div className="card-body bg-light rounded">
+                                    <small className="text-muted">Humidity</small>
+                                    <p className="fs-4 mb-0">{weather.main.humidity}%</p>
+                                </div>
+                            </div>
+
+                            <div className="col-6 mb-3">
+                                <div className="card-body bg-light rounded">
+                                    <small className="text-muted">Wind Speed</small>
+                                    <p className="fs-4 mb-0">{weather.wind.speed} m/s</p>
+                                </div>
+                            </div>
+
+                            <div className="col-6 mb-3">
+                                <div className="card-body bg-light rounded">
+                                    <small className="text-muted">Pressure</small>
+                                    <p className="fs-4 mb-0">{weather.main.pressure} hPa</p>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+
+
             </div>
         </div>
     </div>
