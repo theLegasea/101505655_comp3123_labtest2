@@ -65,10 +65,11 @@ const App = () => {
 
     return (
         <div className="min-vh-100 d-flex align-items-center" style={{background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'}}>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet" />
             <div className="container">
                 <div className="card col-md-6 mx-auto shadow-lg">
                     <div className="card-body">
-                        <h2 className="text-center mb-3">Weather Tracking</h2>
+                        <h2 className="text-center mb-3" style={{fontFamily: 'Poppins, sans-serif', fontWeight: '700'}}>Weather Tracking</h2>
                         <div className="d-flex justify-content-center">
                             <input
                                 type="text"
@@ -129,7 +130,7 @@ const App = () => {
                         )}
 
                         {!weather && !error && !loading && (
-                        <p className="text-center text-muted">Enter a city name to check the current weather.</p>
+                            <p className="text-center text-muted">Enter a city name to check the current weather.</p>
                         )}
 
                     </div>
