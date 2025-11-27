@@ -8,11 +8,30 @@ const  App = () => {
     const[city,setCity] = useState("");
     const[weather,setWeather] = useState(null);
     const[loading,setLoading] = useState(false);
-    const[error,setError] = useState(null);
+    const[error,setError] = useState("");
     const apiKey = "20fd0bd4e1e3767428c9f326c6470f97";
 
-    /*TODO: fetch weather function*/
+    const fetchWeather = async () => {
+        if(city.trim() === "") {
+            setError("Please enter a city name")
+        }
+        setError("");
+        setLoading(true);
 
+        fetch("https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Could not fetch weather data");
+            }
+            return response.json();
+        }).then(data => {
+            setWeather(data);
+            setLoading(false);
+        }).catch(err => {
+            setError(err.message);
+            setLoading(false);
+        });
+    }
 
   return (
     <div className="container mt-5">
